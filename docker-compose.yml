@@ -1,0 +1,57 @@
+# ============================================================================
+# Joint Task Force Draugr Bots - Docker Compose
+# ============================================================================
+# FILE VERSION: v1.0.0
+# Repository: https://github.com/the-alphabet-cartel/bragi
+# Community: The Alphabet Cartel - https://discord.gg/alphabetcartel
+# ============================================================================
+name: jftd
+
+### Common Settings ###
+x-common: &common
+  restart: unless-stopped
+  networks:
+    - jftd
+
+### Common Environmental Variables ###
+x-env: &env
+  PGID: ${PGID:-1000}
+  PUID: ${PUID:-1000}
+  TZ: ${TZ:-America/Los_Angeles}
+
+### Common Healthcheck Settings ###
+x-health: &health
+  interval: 5s
+  timeout: 10s
+  retries: 3
+  start_period: 60s
+  start_interval: 30s
+
+services:
+  # ===========================================================================
+  # Ratatoskr - JTFD's Task Manager
+  # ===========================================================================
+  ratatoskr:
+    image: ghcr.io/the-alphabet-cartel/ratatoskr:latest
+    container_name: ratatoskr
+    <<: *common
+    environment:
+      <<: *env
+      TOKEN_FILE: /run/secrets/ratatoskr_token
+    env_file: .env
+    secrets:
+      - ratatoskr_token
+    volumes:
+      - ./bots/ratatoskr/logs:/app/logs
+      - ./bots/ratatoskr/data:/app/data
+      - ./bots/ratatoskr/config:/app/src/config
+    healthcheck:
+      <<: *health
+
+secrets:
+  ratatoskr_token:
+    file: ./secrets/ratatoskr_fluxer_token
+
+networks:
+  jftd:
+    driver: bridge
