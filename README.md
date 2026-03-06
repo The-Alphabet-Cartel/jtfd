@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="images/JFTD-Logo.png" alt="Joint Task Force Draugr Logo" width="200" />
+</p>
+
 # Joint Task Force Draugr — Fluxer Bots
 
 Bot deployment stack for Joint Task Force Draugr (JFTD), an Arma 3 MilSim community on Fluxer.
