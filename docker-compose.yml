@@ -2,16 +2,16 @@
 # Joint Task Force Draugr Bots - Docker Compose
 # ============================================================================
 # FILE VERSION: v1.0.0
-# Repository: https://github.com/the-alphabet-cartel/bragi
+# Repository: https://github.com/the-alphabet-cartel/jtfd
 # Community: The Alphabet Cartel - https://discord.gg/alphabetcartel
 # ============================================================================
-name: jftd
+name: jtfd
 
 ### Common Settings ###
 x-common: &common
   restart: unless-stopped
   networks:
-    - jftd
+    - jtfd
 
 ### Common Environmental Variables ###
 x-env: &env
@@ -42,9 +42,9 @@ services:
     secrets:
       - ratatoskr_token
     volumes:
-      - ./bots/ratatoskr/logs:/app/logs
-      - ./bots/ratatoskr/data:/app/data
       - ./bots/ratatoskr/config:/app/src/config
+      - ./bots/ratatoskr/data:/app/data
+      - ./bots/ratatoskr/logs:/app/logs
     healthcheck:
       <<: *health
 
@@ -53,5 +53,5 @@ secrets:
     file: ./secrets/ratatoskr_fluxer_token
 
 networks:
-  jftd:
+  jtfd:
     driver: bridge
